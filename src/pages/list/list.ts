@@ -14,8 +14,9 @@ export class ListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private appService: AppService) {}
 
   ionViewDidLoad() {
-    this.appService.scrap().subscribe((response) => {
-      const $ = cheerio.load(response._body);
+    this.appService.scrap().subscribe((response: any) => {
+      const $ = cheerio.load(response.text());
+      debugger
       const posts = $('.blog-post');
       posts.toArray().map((post) => {
         const description = $(post).find('.blog-post-title a').text();
