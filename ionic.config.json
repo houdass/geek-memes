@@ -1,0 +1,8 @@
+{
+  "name": "GeekMemes",
+  "app_id": "5a731bcc",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
