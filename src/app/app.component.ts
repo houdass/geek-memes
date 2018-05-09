@@ -14,23 +14,23 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon: string, tag: string }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Best of', component: HomePage },
-      { title: 'Random', component: HomePage },
-      { title: 'Rage', component: ListPage },
-      { title: 'Win', component: HomePage },
-      { title: 'Fail', component: ListPage },
-      { title: 'WTF', component: HomePage },
-      { title: 'Stagiaire', component: ListPage },
-      { title: 'Client', component: ListPage },
-      { title: 'Commercial', component: ListPage },
-      { title: 'Chef', component: ListPage }
+      { title: 'Best of', component: ListPage, icon: 'yh-best-of', tag: 'best' },
+      { title: 'Random', component: HomePage, icon: 'yh-random', tag: 'bestof' },
+      { title: 'Rage', component: ListPage, icon: 'yh-rage', tag: 'rage' },
+      { title: 'Win', component: ListPage, icon: 'yh-win', tag: 'win'  },
+      { title: 'Fail', component: ListPage, icon: 'yh-fail', tag: 'fail' },
+      { title: 'WTF', component: ListPage, icon: 'yh-wtf', tag: 'wtf' },
+      { title: 'Stagiaire', component: ListPage, icon: 'yh-trainee', tag: 'stagiaire' },
+      { title: 'Client', component: ListPage, icon: 'yh-client', tag: 'client'  },
+      { title: 'Commercial', component: ListPage, icon: 'yh-commercial', tag: 'commercial' },
+      { title: 'Chef', component: ListPage, icon: 'yh-boss', tag: 'chef' }
     ];
   }
 
@@ -46,6 +46,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component, { page });
   }
 }

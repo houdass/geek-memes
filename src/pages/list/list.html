@@ -1,21 +1,44 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>List Cards</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Posts</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content>
-  <div class="pins">
-    <ion-card class="pin" *ngFor="let post of posts">
-      <img [src]="post.image"/>
-      <div *ngIf="post.description" class="post-description">
-        <small>{{ post.description }}</small>
-      </div>
-      <ion-item>
-        <small>McFly</small>
-        <p>
-          <small>Category</small>
-        </p>
-      </ion-item>
-    </ion-card>
-  </div>
+  <ion-card *ngFor="let post of posts">
+    <img [src]="post.image" (click)="cardTapped(card)"/>
+    <ion-card-content>
+      <h2 class="card-title">
+        {{ post.description }}
+      </h2>
+    </ion-card-content>
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-left (click)="favorite(card)">
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-left (click)="listen(card)">
+          <ion-icon name='musical-notes'></ion-icon>
+          Listen
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-left (click)="share(card)">
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles"
+                                 loadingText="Téléchargement des images en cours...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
