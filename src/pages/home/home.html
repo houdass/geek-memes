@@ -3,16 +3,37 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Random</ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <ion-card *ngFor="let post of posts">
-    <img [src]="post.image"/>
-    <div *ngIf="post.description" class="post-description">
-      {{ post.description }}
-    </div>
+    <img [src]="post.image" (click)="cardTapped(card)"/>
+    <ion-card-content>
+      <h2>
+        {{ post.description }}
+      </h2>
+    </ion-card-content>
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="danger" icon-left (click)="favorite(card)">
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="danger" icon-left (click)="listen(card)">
+          <ion-icon name='musical-notes'></ion-icon>
+          Listen
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="danger" icon-left (click)="share(card)">
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-buttons text-center>
     <button text-center ion-button dark outline round (click)="reload()" icon-only>

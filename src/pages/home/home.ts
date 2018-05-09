@@ -32,7 +32,6 @@ export class HomePage {
   }
 
   reload() {
-    debugger
     this.posts = [];
     if (this.randomPageUrl) {
       this.randomPageData();

@@ -3,24 +3,34 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Posts</ion-title>
+    <ion-title>{{ page.title }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <div *ngIf="!page.tag">Vous n'avez pas pas enregistré de favoris</div>
   <ion-card *ngFor="let post of posts">
     <img [src]="post.image" (click)="cardTapped(card)"/>
     <ion-card-content>
-      <h2 class="card-title">
+      <h2>
         {{ post.description }}
       </h2>
     </ion-card-content>
     <ion-row no-padding>
       <ion-col>
-        <button ion-button clear small color="danger" icon-left (click)="favorite(card)">
-          <ion-icon name='star'></ion-icon>
+        <button ion-button clear small color="danger" icon-left (click)="unfavoritePost(post)" *ngIf="post.isFavorite">
+          <ion-icon name="star"></ion-icon>
+          Unfavorite
+        </button>
+        <button ion-button clear small color="danger" icon-left (click)="favoritePost(post)" *ngIf="!post.isFavorite">
+          <ion-icon name="star-outline"></ion-icon>
           Favorite
         </button>
+
+        <!-- <button ion-button clear small color="danger" icon-left (click)="favorite(post)">
+          <ion-icon name='star'></ion-icon>
+          Favorite
+        </button> -->
       </ion-col>
       <ion-col text-center>
         <button ion-button clear small color="danger" icon-left (click)="listen(card)">
