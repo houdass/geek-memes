@@ -1,5 +1,5 @@
 <ion-card no-margin [ngClass]="{ 'border': !canReload }">
-  <img [src]="post.image" (click)="cardTapped(post)"/>
+  <img src="{{ post.image }}" class="img-loader" />
   <ion-card-content>
     <h2>
       {{ post.description }}

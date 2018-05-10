@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { find, findIndex, rest } from 'lodash';
+import { find, findIndex } from 'lodash';
 
-const STORAGE_KEY = 'pozsts';
+const STORAGE_KEY = 'HHHH';
 
 @Injectable()
 export class StorageService {
+
+  isComplete = false;
 
   constructor(private storage: Storage) {}
 
@@ -17,6 +19,7 @@ export class StorageService {
 
   favoritePost(post) {
     return this.getAllFavoritePosts().then(posts => {
+      post.isFavorite = true;
       if (posts) {
         posts.push(post);
         return this.storage.set(STORAGE_KEY, posts);
@@ -41,10 +44,10 @@ export class StorageService {
   }
 
   paginate(posts, page = 1) {
-    debugger
-    const perPage = 4;
-    const offset = (page - 1) * perPage;
-    const a = rest(posts, offset).slice(0, perPage);
-    return a;
+    const offset = (page - 1) * 4;
+    if (offset + 4 > posts.length) {
+      this.isComplete = true;
+    }
+    return posts.slice(offset, offset + 4);
   }
 }

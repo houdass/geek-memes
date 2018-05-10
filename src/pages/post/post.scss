@@ -6,5 +6,12 @@ yh-post {
     &.border {
       border-bottom: 2px #f53d3d solid;
     }
+
+    img.img-loader {
+      background-image: url('../../assets/imgs/loader.gif');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      min-height: 250px;
+    }
   }
 }

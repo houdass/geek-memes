@@ -12,7 +12,7 @@ import { PostComponent } from '../pages/post/post';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppService } from '../services/app.service';
-import { StorageService } from "../services/storage.service";
+import { StorageService } from '../services/storage.service';
 
 @NgModule({
   declarations: [

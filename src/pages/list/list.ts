@@ -37,14 +37,11 @@ export class ListPage {
       });
     } else {
       this.storageService.getAllFavoritePosts().then((posts) => {
-        if (isEmpty(posts)) {
+        if (!posts && isEmpty(posts)) {
           this.showEmptyMessage = true;
+        } else {
+          this.posts = this.storageService.paginate(posts, this.pageNumber);
         }
-        this.posts = posts.map((post) => {
-          post.isFavorite = true
-          return post;
-        });
-        this.posts = this.storageService.paginate(this.posts, this.pageNumber);
       });
     }
   }
@@ -65,11 +62,15 @@ export class ListPage {
         infiniteScroll.complete();
       });
     } else {
-      this.storageService.getAllFavoritePosts().then((posts) => {
-        const aaa = this.storageService.paginate(posts, this.pageNumber);
-        this.posts.push(...aaa);
+      if (!this.storageService.isComplete) {
+        this.storageService.getAllFavoritePosts().then((posts) => {
+          const favoritePosts = this.storageService.paginate(posts, this.pageNumber);
+          this.posts.push(...favoritePosts);
+          infiniteScroll.complete();
+        });
+      } else {
         infiniteScroll.complete();
-      });
+      }
     }
   }
 

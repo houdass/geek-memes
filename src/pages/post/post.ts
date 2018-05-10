@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 
 @Component({
@@ -24,6 +24,8 @@ export class PostComponent {
       post.isFavorite = false;
     });
   }
+
+  download(post) {}
 
   reload() {
     this.reloadEvent.emit();
