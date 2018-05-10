@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
+    <button ion-button menuToggle color="danger">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{ page.title }}</ion-title>
@@ -8,44 +8,13 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="!page.tag">Vous n'avez pas pas enregistré de favoris</div>
-  <ion-card *ngFor="let post of posts">
-    <img [src]="post.image" (click)="cardTapped(card)"/>
+  <ion-card *ngIf="!page.tag && showEmptyMessage">
     <ion-card-content>
-      <h2>
-        {{ post.description }}
-      </h2>
+      Vous n'avez pas de favoris, veuillez en rajouter.
     </ion-card-content>
-    <ion-row no-padding>
-      <ion-col>
-        <button ion-button clear small color="danger" icon-left (click)="unfavoritePost(post)" *ngIf="post.isFavorite">
-          <ion-icon name="star"></ion-icon>
-          Unfavorite
-        </button>
-        <button ion-button clear small color="danger" icon-left (click)="favoritePost(post)" *ngIf="!post.isFavorite">
-          <ion-icon name="star-outline"></ion-icon>
-          Favorite
-        </button>
-
-        <!-- <button ion-button clear small color="danger" icon-left (click)="favorite(post)">
-          <ion-icon name='star'></ion-icon>
-          Favorite
-        </button> -->
-      </ion-col>
-      <ion-col text-center>
-        <button ion-button clear small color="danger" icon-left (click)="listen(card)">
-          <ion-icon name='musical-notes'></ion-icon>
-          Listen
-        </button>
-      </ion-col>
-      <ion-col text-right>
-        <button ion-button clear small color="danger" icon-left (click)="share(card)">
-          <ion-icon name='share-alt'></ion-icon>
-          Share
-        </button>
-      </ion-col>
-    </ion-row>
   </ion-card>
+
+  <yh-post [post]="post" *ngFor="let post of posts"></yh-post>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles"
                                  loadingText="Téléchargement des images en cours...">

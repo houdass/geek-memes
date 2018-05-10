@@ -7,17 +7,19 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { PostComponent } from '../pages/post/post';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppService } from '../services/app.service';
-import {StorageService} from "../services/storage.service";
+import { StorageService } from "../services/storage.service";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    PostComponent
   ],
   imports: [
     BrowserModule,
