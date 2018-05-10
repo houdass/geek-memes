@@ -1,0 +1,10 @@
+yh-post {
+  ion-card.card {
+    width: 100%;
+    border-radius: 0;
+
+    &.border {
+      border-bottom: 2px #f53d3d solid;
+    }
+  }
+}

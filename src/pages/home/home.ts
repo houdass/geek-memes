@@ -8,9 +8,8 @@ import cheerio from 'cheerio';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  imgSrc;
   randomPageUrl;
-  posts = [];
+  post = {}
 
   constructor(public navCtrl: NavController, private appService: AppService) {}
 
@@ -22,17 +21,17 @@ export class HomePage {
     this.appService.scrapRandom(this.randomPageUrl).subscribe((response) => {
       const $ = cheerio.load(response.text());
       const posts = $('.blog-post');
+
       posts.toArray().map((post) => {
         this.randomPageUrl = $('.fa-random').parent().attr('href');
         const description = $(post).find('h1.blog-post-title').text();
         const image = $(post).find('.blog-post-content img').attr('src');
-        this.posts.push({ description, image });
+        this.post = { description, image };
       });
     });
   }
 
   reload() {
-    this.posts = [];
     if (this.randomPageUrl) {
       this.randomPageData();
     } else {
