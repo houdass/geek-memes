@@ -8,8 +8,8 @@ yh-post {
     }
 
     img.img-loader {
-      background-image: url('../../assets/imgs/loader.gif');
-      background-repeat: no-repeat;
+      background: url(../assets/imgs/loader.gif);
+      // background-repeat: no-repeat;
       background-size: 100% 100%;
       min-height: 250px;
     }

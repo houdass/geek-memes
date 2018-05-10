@@ -3,6 +3,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -38,6 +40,8 @@ import { StorageService } from '../services/storage.service';
     SplashScreen,
     AppService,
     StorageService,
+    File,
+    FileTransfer,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
