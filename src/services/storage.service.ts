@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { find, findIndex } from 'lodash';
 
-const STORAGE_KEY = 'HHHH';
+const STORAGE_KEY = 'Trance';
 
 @Injectable()
 export class StorageService {
@@ -13,7 +13,7 @@ export class StorageService {
 
   isFavorite(post) {
     return this.getAllFavoritePosts().then(posts => {
-     return posts && find(posts, { image : post.image });
+     return !!(posts && find(posts, { image : post.image }));
     });
   }
 

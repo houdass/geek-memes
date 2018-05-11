@@ -1,25 +1,29 @@
 <ion-card no-margin [ngClass]="{ 'border': !canReload }">
-  <img src="{{ post.image }}" class="img-loader" />
+  <img src="{{ post?.image }}" class="img-loader" />
   <ion-card-content>
     <h2>
-      {{ post.description }}
+      {{ post?.description }}
     </h2>
     <ion-row no-padding>
       <ion-col>
-        <button ion-button clear color="danger" icon-left icon-only (click)="unfavoritePost(post)" *ngIf="post.isFavorite">
-          <ion-icon name="star" class="gold"></ion-icon>
+        <ion-spinner name="dots" *ngIf="!post.image"></ion-spinner>
+        <button ion-button clear color="danger" icon-left icon-only (click)="unfavoritePost(post)" *ngIf="post.isFavorite && post.image">
+          <ion-icon name="star" class="gold" [@myvisibility]="visibility(!showDots)"></ion-icon>
+          <ion-spinner name="dots" *ngIf="showDots"></ion-spinner>
         </button>
-        <button ion-button clear color="danger" icon-left icon-only (click)="favoritePost(post)" *ngIf="!post.isFavorite">
-          <ion-icon name="star-outline"></ion-icon>
+        <button ion-button clear color="danger" icon-left icon-only (click)="favoritePost(post)" *ngIf="!post.isFavorite && post.image">
+          <ion-icon name="star-outline" [@myvisibility]="visibility(!showDots)"></ion-icon>
+          <ion-spinner name="dots" *ngIf="showDots"></ion-spinner>
         </button>
       </ion-col>
       <ion-col text-center *ngIf="canReload">
-        <button text-center ion-button outline round (click)="reload()" icon-only color="danger">
+        <button class="invisible" text-center ion-button outline round (click)="reload()" icon-only color="danger" [@myvisibility]="visibility(post.image)">
           <ion-icon name="ios-refresh-outline"></ion-icon>
         </button>
       </ion-col>
       <ion-col text-right>
-        <button ion-button clear color="danger" icon-left icon-only (click)="download(post)">
+        <ion-spinner name="dots" *ngIf="!post.image"></ion-spinner>
+        <button class="invisible" ion-button clear color="danger" icon-left icon-only (click)="download(post)" [@myvisibility]="visibility(post.image)">
           <ion-icon name='ios-cloud-download-outline'></ion-icon>
         </button>
       </ion-col>

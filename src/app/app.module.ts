@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { RandomPage } from '../pages/random/random';
 import { ListPage } from '../pages/list/list';
 import { PostComponent } from '../pages/post/post';
 
@@ -19,20 +20,21 @@ import { StorageService } from '../services/storage.service';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    RandomPage,
     ListPage,
     PostComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    RandomPage,
     ListPage
   ],
   providers: [

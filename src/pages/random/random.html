@@ -7,5 +7,5 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <yh-post [post]="post" [canReload]="true" (reloadEvent)="reload()"></yh-post>
+  <yh-post [post]="post" [isReloading]="isReloading" [canReload]="true" (reloadEvent)="reload()"></yh-post>
 </ion-content>
