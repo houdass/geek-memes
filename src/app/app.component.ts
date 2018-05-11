@@ -2,37 +2,45 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { Subject } from 'rxjs/Subject';
+import { Page } from '../shared/page.model';
+import { RandomPage } from '../pages/random/random';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  activePage = new Subject();
 
-  rootPage: any = HomePage;
+  rootPage: any = RandomPage;
 
-  pages: Array<{title: string, component: any, icon: string, tag?: string }>;
+  pages: Array<Page>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
+    // used for navigation
     this.pages = [
-      { title: 'Mes Favoris', component: ListPage, icon: 'yh-star' },
-      { title: 'Random', component: HomePage, icon: 'yh-random', tag: 'bestof' },
-      { title: 'Best of', component: ListPage, icon: 'yh-best-of', tag: 'best' },
-      { title: 'Rage', component: ListPage, icon: 'yh-rage', tag: 'rage' },
-      { title: 'Win', component: ListPage, icon: 'yh-win', tag: 'win'  },
-      { title: 'Fail', component: ListPage, icon: 'yh-fail', tag: 'fail' },
-      { title: 'WTF', component: ListPage, icon: 'yh-wtf', tag: 'wtf' },
-      { title: 'Stagiaire', component: ListPage, icon: 'yh-trainee', tag: 'stagiaire' },
-      { title: 'Client', component: ListPage, icon: 'yh-client', tag: 'client'  },
-      { title: 'Commercial', component: ListPage, icon: 'yh-commercial', tag: 'commercial' },
-      { title: 'Chef', component: ListPage, icon: 'yh-boss', tag: 'chef' }
+      new Page('Mes Favoris', ListPage, 'yh-star', false),
+      new Page('Random', RandomPage, 'yh-random', true),
+      new Page('Best of', ListPage, 'yh-best-of', false, 'best'),
+      new Page('Rage', ListPage, 'yh-rage', false, 'best'),
+      new Page('Win', ListPage, 'yh-win', false, 'Win'),
+      new Page('Fail', ListPage, 'yh-fail', false, 'Fail'),
+      new Page('WTF', ListPage, 'yh-wtf', false, 'wtf'),
+      new Page('Stagiaire', ListPage, 'yh-trainee', false, 'stagiaire'),
+      new Page('Client', ListPage, 'yh-client', false, 'client'),
+      new Page('Commercial', ListPage, 'yh-commercial', false, 'commercial'),
+      new Page('Chef', ListPage, 'yh-boss', false, 'chef')
     ];
+
+    this.activePage.subscribe((selectedPage: any) => {
+      this.pages.map(page => {
+        page.active = page.title === selectedPage.title;
+      });
+    });
   }
 
   initializeApp() {
@@ -48,5 +56,6 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component, { page });
+    this.activePage.next(page);
   }
 }

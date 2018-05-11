@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AppService } from '../../services/app.service';
-import cheerio from 'cheerio';
 import { StorageService } from '../../services/storage.service';
 import { isEmpty } from 'lodash';
+import { Post } from '../../shared/post.model';
 
 @Component({
   selector: 'list-page',
@@ -11,7 +11,7 @@ import { isEmpty } from 'lodash';
 })
 export class ListPage {
 
-  posts = [];
+  posts: Array<Post> = [];
   pageNumber = 1;
   page: any = {};
   showEmptyMessage = false;
@@ -22,22 +22,15 @@ export class ListPage {
               private storageService: StorageService) {}
 
   ionViewDidLoad() {
+    this.storageService.isComplete = false;
     this.page = this.navParams.get('page');
     if (this.page.tag) {
-      this.appService.scrap(this.page.tag).subscribe((response) => {
-        const $ = cheerio.load(response.text());
-        const posts = $('.blog-post');
-        posts.toArray().map((post) => {
-          const description = $(post).find('.blog-post-title a').text();
-          const image = $(post).find('.blog-post-content img').attr('src');
-          this.storageService.isFavorite({ image }).then((isFavorite) => {
-            this.posts.push({ description, image, isFavorite });
-          });
-        });
-      });
+      this.appService.scrapV2(this.page.tag).subscribe((posts) => {
+        this.posts = posts;
+      })
     } else {
       this.storageService.getAllFavoritePosts().then((posts) => {
-        if (!posts && isEmpty(posts)) {
+        if (isEmpty(posts)) {
           this.showEmptyMessage = true;
         } else {
           this.posts = this.storageService.paginate(posts, this.pageNumber);
@@ -49,16 +42,8 @@ export class ListPage {
   doInfinite(infiniteScroll) {
     this.pageNumber = ++this.pageNumber;
     if (this.page.tag) {
-      this.appService.scrap(this.page.tag, this.pageNumber).subscribe((response) => {
-        const $ = cheerio.load(response.text());
-        const posts = $('.blog-post');
-        posts.toArray().map((post) => {
-          const description = $(post).find('.blog-post-title a').text();
-          const image = $(post).find('.blog-post-content img').attr('src');
-          this.storageService.isFavorite({image}).then((isFavorite) => {
-            this.posts.push({ description, image, isFavorite });
-          });
-        });
+      this.appService.scrapV2(this.page.tag, this.pageNumber).subscribe((posts) => {
+        this.posts = posts;
         infiniteScroll.complete();
       });
     } else {
