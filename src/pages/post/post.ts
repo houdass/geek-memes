@@ -29,7 +29,7 @@ export class PostComponent {
   @Input() reload;
   @Output() reloadEvent = new EventEmitter();
   @Output() postDeleteChanged = new EventEmitter();
-  fileTransfer: FileTransferObject;
+  // fileTransfer: FileTransferObject;
   showDots = false;
   @Input() isFavoritePage;
 
@@ -39,12 +39,12 @@ export class PostComponent {
               private socialSharing: SocialSharing,
               private networkService: NetworkService,
               public platform: Platform) {
-    this.platform.ready().then(() => {
+    /* this.platform.ready().then(() => {
       this.fileTransfer = this.transfer.create();
       this.fileTransfer.onProgress((progressEvent) => {
         console.log(progressEvent.loaded);
       });
-    });
+    }); */
   }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
