@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+// import { File } from '@ionic-native/file';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -34,8 +34,8 @@ export class PostComponent {
   @Input() isFavoritePage;
 
   constructor(private storageService: StorageService,
-              private transfer: FileTransfer,
-              private file: File,
+              // private transfer: FileTransfer,
+              // private file: File,
               private socialSharing: SocialSharing,
               private networkService: NetworkService,
               public platform: Platform) {
@@ -83,14 +83,14 @@ export class PostComponent {
   }
 
   download(post) {
-    this.fileTransfer.download(post.image, this.file.externalApplicationStorageDirectory + post.image.split('/').pop()).then((entry) => {
+    /* this.fileTransfer.download(post.image, this.file.externalApplicationStorageDirectory + post.image.split('/').pop()).then((entry) => {
       console.log('download complete: ' + entry.toURL());
       this.file.copyFile(this.file.dataDirectory,  post.image.split('/').pop(), this.file.dataDirectory, post.image.split('/').pop()).then(() => {
         console.log('Copied!', this.file.externalApplicationStorageDirectory);
       })
     }, (error) => {
       console.log(error);
-    });
+    }); */
   }
 
   refresh() {

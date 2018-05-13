@@ -18,8 +18,8 @@ import { AppService } from '../services/app.service';
 import { StorageService } from '../services/storage.service';
 import { NetworkService } from '../services/network.service';
 
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
+// import { FileTransfer } from '@ionic-native/file-transfer';
+// import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Network } from '@ionic-native/network';
 import { AdMobFree } from '@ionic-native/admob-free';
@@ -50,8 +50,8 @@ import { AdMobFree } from '@ionic-native/admob-free';
     AppService,
     StorageService,
     NetworkService,
-    File,
-    FileTransfer,
+    // File,
+    // FileTransfer,
     Network,
     SocialSharing,
     AdMobFree,
