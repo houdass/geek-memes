@@ -1,32 +1,45 @@
-<ion-card no-margin [ngClass]="{ 'border': !canReload }">
-  <img src="{{ post?.image }}" class="img-loader" />
+<ion-card no-margin [ngClass]="{ 'border': !canReload, 'no-box-shadow': canReload }" *ngIf="(isFavoritePage && post.isFavorite) || !isFavoritePage">
+  <img src="{{ post?.image }}" class="img-loader" *ngIf="!reload?.isReloading" />
+  <img class="img-loader" *ngIf="reload?.isReloading" />
   <ion-card-content>
-    <h2>
+    <h2 [@myvisibility]="visibility(!reload?.isReloading)">
       {{ post?.description }}
     </h2>
     <ion-row no-padding>
       <ion-col>
-        <ion-spinner name="dots" *ngIf="!post.image"></ion-spinner>
-        <button ion-button clear color="danger" icon-left icon-only (click)="unfavoritePost(post)" *ngIf="post.isFavorite && post.image">
-          <ion-icon name="star" class="gold" [@myvisibility]="visibility(!showDots)"></ion-icon>
-          <ion-spinner name="dots" *ngIf="showDots"></ion-spinner>
-        </button>
-        <button ion-button clear color="danger" icon-left icon-only (click)="favoritePost(post)" *ngIf="!post.isFavorite && post.image">
-          <ion-icon name="star-outline" [@myvisibility]="visibility(!showDots)"></ion-icon>
-          <ion-spinner name="dots" *ngIf="showDots"></ion-spinner>
+        <ion-spinner name="dots" *ngIf="!post.image" margin-top></ion-spinner>
+        <span *ngIf="!isFavoritePage">
+          <button ion-button clear color="danger" icon-left icon-only (click)="unfavoritePost(post)" *ngIf="post.isFavorite && post.image && !showDots">
+            <ion-icon name="star" class="gold"></ion-icon>
+          </button>
+          <button ion-button clear color="danger" icon-left icon-only (click)="favoritePost(post)" *ngIf="!post.isFavorite && post.image && !showDots">
+            <ion-icon name="star-outline"></ion-icon>
+          </button>
+        </span>
+        <button ion-button clear color="danger" icon-left icon-only (click)="deletePost(post)" *ngIf="isFavoritePage">
+          <ion-icon name="trash"></ion-icon>
         </button>
       </ion-col>
-      <ion-col text-center *ngIf="canReload">
-        <button class="invisible" text-center ion-button outline round (click)="reload()" icon-only color="danger" [@myvisibility]="visibility(post.image)">
-          <ion-icon name="ios-refresh-outline"></ion-icon>
-        </button>
+      <ion-col text-center>
+        <ion-spinner name="dots" *ngIf="reload?.isReloading" margin-top></ion-spinner>
+        <span *ngIf="canReload && !reload?.isReloading">
+          <button class="invisible" text-center ion-button outline round (click)="refresh()" icon-only color="danger" [@myvisibility]="visibility(post.image)">
+            <ion-icon name="ios-refresh-outline"></ion-icon>
+          </button>
+        </span>
       </ion-col>
       <ion-col text-right>
-        <ion-spinner name="dots" *ngIf="!post.image"></ion-spinner>
-        <button class="invisible" ion-button clear color="danger" icon-left icon-only (click)="download(post)" [@myvisibility]="visibility(post.image)">
-          <ion-icon name='ios-cloud-download-outline'></ion-icon>
+        <ion-spinner name="dots" *ngIf="!post.image" margin-top></ion-spinner>
+        <button ion-button clear color="danger" icon-left icon-only (click)="share(post)" *ngIf="post.image">
+          <ion-icon name='md-share'></ion-icon>
         </button>
       </ion-col>
+      <!-- <ion-col text-right>
+        <ion-spinner name="dots" *ngIf="!post.image" margin-top></ion-spinner>
+        <button ion-button clear color="danger" icon-left icon-only (click)="download(post)" *ngIf="post.image">
+          <ion-icon name='ios-cloud-download-outline'></ion-icon>
+        </button>
+      </ion-col> -->
     </ion-row>
   </ion-card-content>
 </ion-card>

@@ -7,6 +7,10 @@ yh-post {
       border-bottom: 2px #f53d3d solid;
     }
 
+    &.no-box-shadow {
+      box-shadow: none;
+    }
+
     img.img-loader {
       background: url(../assets/imgs/loader.gif);
       // background-repeat: no-repeat;

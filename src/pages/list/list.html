@@ -14,7 +14,7 @@
     </ion-card-content>
   </ion-card>
 
-  <yh-post [post]="post" *ngFor="let post of posts"></yh-post>
+  <yh-post [post]="post" *ngFor="let post of posts" [isFavoritePage]="!page.tag" (postDeleteChanged)="isEmptyMessage()"></yh-post>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" margin-top>
     <ion-infinite-scroll-content loadingSpinner="bubbles"
                                  loadingText="Téléchargement des images en cours...">

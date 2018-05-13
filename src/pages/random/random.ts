@@ -9,18 +9,18 @@ import 'rxjs/add/operator/map';
 })
 export class RandomPage {
   post = {};
-  isReloading = false;
+  reload = { isReloading: false };
 
   constructor(public navCtrl: NavController, private appService: AppService) {}
 
   ionViewDidLoad() {
-    this.reload()
+    this.refresh()
   }
 
-  reload() {
+  refresh() {
     this.appService.scrapRandom().subscribe((post) => {
       this.post = post;
-      this.isReloading = false;
+      this.reload.isReloading = false;
     })
   }
 }

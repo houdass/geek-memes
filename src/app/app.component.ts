@@ -6,7 +6,9 @@ import { ListPage } from '../pages/list/list';
 import { Subject } from 'rxjs/Subject';
 import { Page } from '../shared/page.model';
 import { RandomPage } from '../pages/random/random';
-
+import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free';
+import { timer } from 'rxjs/observable/timer';
+import { NetworkService } from '../services/network.service';
 @Component({
   templateUrl: 'app.html'
 })
@@ -18,7 +20,13 @@ export class MyApp {
 
   pages: Array<Page>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  showSplash = true;
+
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              private admob: AdMobFree,
+              private networkService: NetworkService) {
     this.initializeApp();
 
     // used for navigation
@@ -49,13 +57,41 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      timer(3000).subscribe(() => {
+        this.showSplash = false;
+        this.showBanner();
+        this.launchInterstitial();
+      });
     });
+  }
+
+  showBanner() {
+    let bannerConfig: AdMobFreeBannerConfig = {
+      autoShow: true,
+      id: 'ca-app-pub-5938331216552191/5437743958'
+    };
+
+    this.admob.banner.config(bannerConfig);
+    this.admob.banner.prepare().then(() => {
+      // success
+    }).catch(e => console.log(e));
+  }
+
+  launchInterstitial() {
+    let interstitialConfig: AdMobFreeInterstitialConfig = {
+      autoShow: true,
+      id: 'ca-app-pub-5938331216552191/9157497110'
+    };
+    this.admob.interstitial.config(interstitialConfig);
+    this.admob.interstitial.prepare().then(() => {});
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component, { page });
-    this.activePage.next(page);
+    if (this.networkService.checkNetwork()) {
+      this.nav.setRoot(page.component, {page});
+      this.activePage.next(page);
+    }
   }
 }

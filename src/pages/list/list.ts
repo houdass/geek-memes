@@ -4,6 +4,7 @@ import { AppService } from '../../services/app.service';
 import { StorageService } from '../../services/storage.service';
 import { isEmpty } from 'lodash';
 import { Post } from '../../shared/post.model';
+import { NetworkService } from '../../services/network.service';
 
 @Component({
   selector: 'list-page',
@@ -19,7 +20,8 @@ export class ListPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private appService: AppService,
-              private storageService: StorageService) {}
+              private storageService: StorageService,
+              private networkService: NetworkService) {}
 
   ionViewDidLoad() {
     this.storageService.isComplete = false;
@@ -39,13 +41,23 @@ export class ListPage {
     }
   }
 
+  isEmptyMessage() {
+    this.storageService.getAllFavoritePosts().then((posts) => {
+      if (isEmpty(posts)) {
+        this.showEmptyMessage = true;
+      }
+    });
+  }
+
   doInfinite(infiniteScroll) {
     this.pageNumber = ++this.pageNumber;
     if (this.page.tag) {
-      this.appService.scrapV2(this.page.tag, this.pageNumber).subscribe((posts) => {
-        this.posts = posts;
-        infiniteScroll.complete();
-      });
+      if (this.networkService.checkNetwork()) {
+        this.appService.scrapV2(this.page.tag, this.pageNumber).subscribe((posts) => {
+          this.posts.push(...posts);
+          infiniteScroll.complete();
+        });
+      }
     } else {
       if (!this.storageService.isComplete) {
         this.storageService.getAllFavoritePosts().then((posts) => {
@@ -57,17 +69,5 @@ export class ListPage {
         infiniteScroll.complete();
       }
     }
-  }
-
-  favoritePost(post) {
-    this.storageService.favoritePost(post.image).then(() => {
-      post.isFavorite = true;
-    });
-  }
-
-  unfavoritePost(post) {
-    this.storageService.unfavoritePost(post.image).then(() => {
-      post.isFavorite = false;
-    });
   }
 }

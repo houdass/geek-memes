@@ -2,7 +2,6 @@ import cheerio from 'cheerio';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { StorageService } from './storage.service';
 import { Post } from '../shared/post.model';
 import { head } from 'lodash';
 import 'rxjs/add/operator/map';
@@ -16,7 +15,7 @@ export class AppService {
   randomPageUrl;
   options = { responseType:  'text' as 'json' }
 
-  constructor(private httpClient: HttpClient, private storageService: StorageService) {}
+  constructor(private httpClient: HttpClient) {}
 
   scrap(tag, page?) {
     if (page) {
