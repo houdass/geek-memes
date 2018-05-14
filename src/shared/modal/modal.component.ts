@@ -7,8 +7,7 @@ import { MyApp } from '../../app/app.component';
   templateUrl: 'modal.html'
 })
 export class ModalComponent implements AfterViewInit {
-
-  character;
+  
   msg;
   constructor(public navCtrl: NavController,
               private params: NavParams,
