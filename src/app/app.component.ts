@@ -59,8 +59,10 @@ export class MyApp {
       this.splashScreen.hide();
       timer(3000).subscribe(() => {
         this.showSplash = false;
-        this.showBanner();
-        this.launchInterstitial();
+        if (this.platform.is('cordova')) {
+          this.showBanner();
+          this.launchInterstitial();
+        }
       });
     });
   }
@@ -90,7 +92,7 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     if (this.networkService.checkNetwork()) {
-      this.nav.setRoot(page.component, {page});
+      this.nav.setRoot(page.component, { page });
       this.activePage.next(page);
     }
   }

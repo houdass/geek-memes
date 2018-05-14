@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyApp } from './app.component';
 import { RandomPage } from '../pages/random/random';
 import { ListPage } from '../pages/list/list';
-import { PostComponent } from '../pages/post/post';
+import { PostComponent } from '../shared/post/post.component';
+import { ModalComponent } from '../shared/modal/modal.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -29,7 +30,8 @@ import { AdMobFree } from '@ionic-native/admob-free';
     MyApp,
     RandomPage,
     ListPage,
-    PostComponent
+    PostComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { AdMobFree } from '@ionic-native/admob-free';
   entryComponents: [
     MyApp,
     RandomPage,
-    ListPage
+    ListPage,
+    ModalComponent
   ],
   providers: [
     StatusBar,

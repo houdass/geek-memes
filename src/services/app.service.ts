@@ -2,7 +2,7 @@ import cheerio from 'cheerio';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Post } from '../shared/post.model';
+import { Post } from '../shared/post/post.model';
 import { head } from 'lodash';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';

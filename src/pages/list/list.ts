@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AppService } from '../../services/app.service';
 import { StorageService } from '../../services/storage.service';
 import { isEmpty } from 'lodash';
-import { Post } from '../../shared/post.model';
+import { Post } from '../../shared/post/post.model';
 import { NetworkService } from '../../services/network.service';
 
 @Component({

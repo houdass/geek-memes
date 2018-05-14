@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network';
-import { AlertController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
+import { ModalComponent } from '../shared/modal/modal.component';
+// import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class NetworkService {
 
-  constructor(private network: Network, private alertCtrl: AlertController) {
-    debugger
-    let alert = this.alertCtrl.create({
-      title: 'Vous avez été déconnecté, veuillez vérifier votre connexion internet et réessayer',
-      buttons: ['Ok']
-    });
+  // isOnlineEvent = new Subject();
+
+  constructor(private network: Network, private modalCtrl: ModalController) {
+    let modal = this.modalCtrl.create(ModalComponent, { msg: 'Aucune connexion internet !'});
     if (this.network.type === 'none') {
-      alert.present();
+      modal.present();
     }
     this.network.onDisconnect().subscribe(() => {
-      alert.present();
+      modal.present();
     });
   }
 
   checkNetwork() {
     if (this.network.type === 'none') {
-      let alert = this.alertCtrl.create({
-        title: 'Aucune connexion internet',
-        subTitle: 'Vous êtes déconnecté, veuillez vérifier votre connexion internet et réessayer',
-        buttons: ['Ok']
-      });
-      alert.present();
+      let modal = this.modalCtrl.create(ModalComponent, { msg: 'Aucune connexion internet ! '});
+      modal.present();
     }
     return this.network.type !== 'none';
   }
