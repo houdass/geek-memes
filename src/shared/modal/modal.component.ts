@@ -4,7 +4,6 @@ import { Network } from '@ionic-native/network';
 import { MyApp } from '../../app/app.component';
 
 @Component({
-  selector: 'hello-world',
   templateUrl: 'modal.html'
 })
 export class ModalComponent implements AfterViewInit {
