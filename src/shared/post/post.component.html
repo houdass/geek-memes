@@ -1,18 +1,18 @@
-<ion-card no-margin [ngClass]="{ 'border': !canReload, 'no-box-shadow': canReload }" *ngIf="(isFavoritePage && post.isFavorite) || !isFavoritePage">
-  <img src="{{ post?.image }}" class="img-loader" *ngIf="!reload?.isReloading" />
-  <img class="img-loader" *ngIf="reload?.isReloading" />
+<ion-card no-margin [ngClass]="{ 'border': !canReload, 'no-box-shadow': canReload }" *ngIf="(isFavoritePage && post?.isFavorite) || !isFavoritePage">
+  <img [src]="post?.image" class="img-loader" *ngIf="!reload?.isReloading && post?.image" />
+  <img class="img-loader" *ngIf="reload?.isReloading || !post?.image" />
   <ion-card-content>
     <h2 [@myvisibility]="visibility(!reload?.isReloading)">
       {{ post?.description }}
     </h2>
     <ion-row no-padding>
       <ion-col>
-        <ion-spinner name="dots" *ngIf="!post.image" margin-top></ion-spinner>
+        <ion-spinner name="dots" *ngIf="!post.image" margin-top text-center></ion-spinner>
         <span *ngIf="!isFavoritePage">
-          <button ion-button clear color="danger" icon-left icon-only (click)="unfavoritePost(post)" *ngIf="post.isFavorite && post.image && !showDots">
+          <button ion-button clear color="danger" icon-left icon-only (click)="unfavoritePost(post)" *ngIf="post?.isFavorite && post?.image && !showDots">
             <ion-icon name="star" class="gold"></ion-icon>
           </button>
-          <button ion-button clear color="danger" icon-left icon-only (click)="favoritePost(post)" *ngIf="!post.isFavorite && post.image && !showDots">
+          <button ion-button clear color="danger" icon-left icon-only (click)="favoritePost(post)" *ngIf="!post?.isFavorite && post?.image && !showDots">
             <ion-icon name="star-outline"></ion-icon>
           </button>
         </span>

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { AppService } from '../../services/app.service';
+import { NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { isEmpty } from 'lodash';
 import { Post } from '../../shared/post/post.model';
-import { NetworkService } from '../../services/network.service';
+import { PageService } from "../../services/page.service";
 
 @Component({
   selector: 'list-page',
@@ -16,21 +15,25 @@ export class ListPage {
   pageNumber = 1;
   page: any = {};
   showEmptyMessage = false;
+  noPosts = true;
+  length: number;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private appService: AppService,
-              private storageService: StorageService,
-              private networkService: NetworkService) {}
+  constructor(public navParams: NavParams,
+              private pageService: PageService,
+              private storageService: StorageService) {}
 
   ionViewDidLoad() {
     this.storageService.isComplete = false;
     this.page = this.navParams.get('page');
     if (this.page.tag) {
-      this.appService.scrapV2(this.page.tag).subscribe((posts) => {
-        this.posts = posts;
+      this.pageService.get(this.page.tag).subscribe((posts) => {
+        this.noPosts = false;
+        this.posts = posts.slice(0, 4);
+        this.length = posts.length;
+        this.posts.length = 4;
       })
     } else {
+      this.noPosts = false;
       this.storageService.getAllFavoritePosts().then((posts) => {
         if (isEmpty(posts)) {
           this.showEmptyMessage = true;
@@ -50,14 +53,11 @@ export class ListPage {
   }
 
   doInfinite(infiniteScroll) {
-    this.pageNumber = ++this.pageNumber;
     if (this.page.tag) {
-      if (this.networkService.checkNetwork()) {
-        this.appService.scrapV2(this.page.tag, this.pageNumber).subscribe((posts) => {
-          this.posts.push(...posts);
+        this.pageService.get(this.page.tag).subscribe((posts) => {
+          this.posts.push(...posts.slice(this.pageNumber*4, this.pageNumber*4 + 4));
           infiniteScroll.complete();
         });
-      }
     } else {
       if (!this.storageService.isComplete) {
         this.storageService.getAllFavoritePosts().then((posts) => {
@@ -69,5 +69,6 @@ export class ListPage {
         infiniteScroll.complete();
       }
     }
+    this.pageNumber = ++this.pageNumber;
   }
 }

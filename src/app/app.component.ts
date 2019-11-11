@@ -5,10 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ListPage } from '../pages/list/list';
 import { Subject } from 'rxjs/Subject';
 import { Page } from '../shared/page.model';
-import { RandomPage } from '../pages/random/random';
 import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free';
 import { timer } from 'rxjs/observable/timer';
 import { NetworkService } from '../services/network.service';
+import {RandomPage} from "../pages/random/random";
 @Component({
   templateUrl: 'app.html'
 })
@@ -17,6 +17,7 @@ export class MyApp {
   activePage = new Subject();
 
   rootPage: any = RandomPage;
+  rootPageParams = { page: new Page('Best of', ListPage, 'yh-best-of', true, 'best') };
 
   pages: Array<Page>;
 
@@ -25,8 +26,8 @@ export class MyApp {
   constructor(public platform: Platform,
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
-              private admob: AdMobFree,
-              private networkService: NetworkService) {
+              private networkService: NetworkService,
+              private admob: AdMobFree) {
     this.initializeApp();
 
     // used for navigation
@@ -34,9 +35,9 @@ export class MyApp {
       new Page('Mes Favoris', ListPage, 'yh-star', false),
       new Page('Random', RandomPage, 'yh-random', true),
       new Page('Best of', ListPage, 'yh-best-of', false, 'best'),
-      new Page('Rage', ListPage, 'yh-rage', false, 'best'),
-      new Page('Win', ListPage, 'yh-win', false, 'Win'),
-      new Page('Fail', ListPage, 'yh-fail', false, 'Fail'),
+      new Page('Rage', ListPage, 'yh-rage', false, 'rage'),
+      new Page('Win', ListPage, 'yh-win', false, 'win'),
+      new Page('Fail', ListPage, 'yh-fail', false, 'fail'),
       new Page('WTF', ListPage, 'yh-wtf', false, 'wtf'),
       new Page('Stagiaire', ListPage, 'yh-trainee', false, 'stagiaire'),
       new Page('Client', ListPage, 'yh-client', false, 'client'),
@@ -64,6 +65,10 @@ export class MyApp {
           this.launchInterstitial();
         }
       });
+      this.networkService.checkNetwork();
+      this.networkService.randomPageEvent.subscribe(() => {
+        this.nav.setRoot(RandomPage);
+      })
     });
   }
 
@@ -91,9 +96,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    if (this.networkService.checkNetwork()) {
-      this.nav.setRoot(page.component, { page });
-      this.activePage.next(page);
-    }
+    this.nav.setRoot(page.component, { page });
+    this.activePage.next(page);
   }
 }

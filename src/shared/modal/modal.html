@@ -1,20 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      {{ msg }}
+      Aucune connexion !
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-card>
     <ion-card-content>
-      Vous êtes hors ligne, veuillez vérifier votre connexion internet et réessayer, une fois en ligne vous pouvez continuer.
-      <ion-buttons end>
-        <button ion-button icon-end small (click)="dismiss()" [disabled]="!isOnline">
-            Continuer
-          <ion-icon name="ios-arrow-dropright-outline"></ion-icon>
-        </button>
-      </ion-buttons>
+      <ion-icon name="ios-alert-outline"></ion-icon>
+     {{ msg }}
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,31 +1,13 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
-import { Network } from '@ionic-native/network';
-import { MyApp } from '../../app/app.component';
+import { Component } from '@angular/core';
+import { NavParams } from 'ionic-angular';
 
 @Component({
   templateUrl: 'modal.html'
 })
-export class ModalComponent implements AfterViewInit {
-  
+export class ModalComponent {
+
   msg;
-  constructor(public navCtrl: NavController,
-              private params: NavParams,
-              private viewCtrl: ViewController,
-              private network: Network) {}
-
-  ngAfterViewInit() {
+  constructor(private params: NavParams) {
     this.msg = this.params.get('msg');
-    this.network.onConnect().subscribe(() => {
-      this.isOnline = true;
-    });
-    this.network.onDisconnect().subscribe(() => {
-      this.isOnline = false;
-    });
-  }
-
-  dismiss() {
-    this.navCtrl.push(MyApp);
-    this.viewCtrl.dismiss();
   }
 }

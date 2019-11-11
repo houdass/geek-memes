@@ -9,8 +9,14 @@
 
 <ion-content>
   <ion-card *ngIf="!page.tag && showEmptyMessage">
-    <ion-card-content>
+    <ion-card-content text-center>
       Vous n'avez pas de favoris, veuillez en rajouter.
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="noPosts && !showEmptyMessage">
+    <ion-card-content text-center>
+      Chargements des images en cours...<br>
+      <ion-spinner name="dots" margin-top></ion-spinner>
     </ion-card-content>
   </ion-card>
 

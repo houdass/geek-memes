@@ -5,11 +5,10 @@ import { StorageService } from '../../services/storage.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { NetworkService } from '../../services/network.service';
 
 @Component({
   selector: 'yh-post',
-  templateUrl: 'post.html',
+  templateUrl: 'post.component.html',
   animations: [
     trigger('myvisibility', [
       state('visible', style({
@@ -37,7 +36,6 @@ export class PostComponent {
               // private transfer: FileTransfer,
               // private file: File,
               private socialSharing: SocialSharing,
-              private networkService: NetworkService,
               public platform: Platform) {
     /* this.platform.ready().then(() => {
       this.fileTransfer = this.transfer.create();
@@ -94,13 +92,11 @@ export class PostComponent {
   }
 
   refresh() {
-    if (this.networkService.checkNetwork()) {
       this.reload.isReloading = true;
       this.reloadEvent.emit();
-    }
   }
 
   share(post) {
-    this.socialSharing.share(post.description, 'Geek memes', null, post.image);
+    this.socialSharing.share(post.description, 'La joie du code', null, post.image);
   }
 }

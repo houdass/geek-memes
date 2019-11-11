@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AppService } from '../../services/app.service';
+import {PageService} from "../../services/page.service";
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -11,14 +10,14 @@ export class RandomPage {
   post = {};
   reload = { isReloading: false };
 
-  constructor(public navCtrl: NavController, private appService: AppService) {}
+  constructor(private pageService: PageService) {}
 
   ionViewDidLoad() {
     this.refresh()
   }
 
   refresh() {
-    this.appService.scrapRandom().subscribe((post) => {
+    this.pageService.getRandom().subscribe((post) => {
       this.post = post;
       this.reload.isReloading = false;
     })
